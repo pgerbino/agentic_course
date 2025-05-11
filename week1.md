@@ -19,11 +19,11 @@ This week introduces Bedrock Agents, focusing on core concepts, deployment, and 
 ### Tasks
 - 🔗 Read: [Bedrock Agents Overview](https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html) - done
 - 🔐 Create IAM role with:
-  - `bedrock:*`, `lambda:InvokeFunction`, `s3:GetObject`, `logs:*`
-- 🌍 Enable Bedrock in your region (`us-east-1` recommended).
+  - `bedrock:*`, `lambda:InvokeFunction`, `s3:GetObject`, `logs:*` done
+- 🌍 Enable Bedrock in your region (`us-east-1` recommended). done
 - ✅ Validate access:
   ```bash
-  aws bedrock list-foundation-models
+  aws bedrock list-foundation-models done
 ````
 
 ---
@@ -37,7 +37,7 @@ This week introduces Bedrock Agents, focusing on core concepts, deployment, and 
 
 ### Tasks
 
-* 📺 Watch: DeepLearning.AI Module 1–2 (\~30 mins)
+* 📺 Watch: DeepLearning.AI Module 1–2 (\~30 mins) - https://learn.deeplearning.ai/courses/serverless-agentic-workflows-with-amazon-bedrock/lesson/aemxe/introduction?courseName=serverless-agentic-workflows-with-amazon-bedrock
 * 🧠 Understand:
 
   * Agent system prompt
