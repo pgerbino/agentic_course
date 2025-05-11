@@ -17,7 +17,7 @@ This week introduces Bedrock Agents, focusing on core concepts, deployment, and 
 - Set up your AWS environment and permissions.
 
 ### Tasks
-- 🔗 Read: [Bedrock Agents Overview](https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html)
+- 🔗 Read: [Bedrock Agents Overview](https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html) - done
 - 🔐 Create IAM role with:
   - `bedrock:*`, `lambda:InvokeFunction`, `s3:GetObject`, `logs:*`
 - 🌍 Enable Bedrock in your region (`us-east-1` recommended).
@@ -132,7 +132,4 @@ This week introduces Bedrock Agents, focusing on core concepts, deployment, and 
 
 ```
 
----
 
-Would you like Weeks 2–4 scaffolded the same way? Or shall I turn this into a file you can import into Notion, Obsidian, or GitHub Pages?
-```

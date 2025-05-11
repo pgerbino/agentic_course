@@ -1,0 +1,119 @@
+
+# 📘 Understanding AWS Bedrock Agents: Structured Notes
+
+These notes consolidate technical details and mental models for using **AWS Bedrock Agents** to automate customer workflows without managing infrastructure or writing complex orchestration code.
+
+---
+
+## 🧠 Key Capabilities of Bedrock Agents
+
+* **No infrastructure management**: Bedrock abstracts infrastructure, provisioning, and scaling.
+* **Turnkey agent architecture**: You don’t manage memory, prompt engineering, encryption, or user permissions—Bedrock does it for you.
+* **Supports automation of complex tasks** through:
+
+  * Prompt orchestration
+  * Subtask decomposition
+  * User clarification loops
+  * API/function invocation
+  * Retrieval-augmented generation
+
+---
+
+## 🧱 Agent Build-Time Components
+
+### 1. **Foundation Model Selection**
+
+* Choose a model like **Claude** or **Titan** to power your agent's language understanding and generation.
+
+### 2. **Prompt Templates**
+
+You define **four types of prompt templates** to control agent behavior:
+
+* `Preprocessing`: Validate and contextualize user input
+* `Orchestration`: Drive task decomposition and decision logic
+* `Knowledge Base Response`: Format how KB results are integrated
+* `Postprocessing`: Transform output for user presentation
+
+> ⚠️ These are configured **at build time**, not dynamically during runtime.
+
+---
+
+### 3. **Action Groups (API Calling)**
+
+* Define function-calling endpoints using **OpenAPI schemas**.
+* Enables agents to call external services (e.g., via AWS Lambda).
+* Action schema specifies:
+
+  * Parameters
+  * Return types
+  * Function description
+
+### 4. **Knowledge Base Integration**
+
+* Link S3-hosted content (e.g., FAQs, policies) using embedding-based vector search.
+* Agent queries the KB to **augment responses** or fill missing parameters.
+
+---
+
+## 🚀 Agent Runtime Flow (Using `InvokeAgent` API)
+
+### Runtime consists of a **three-phase loop**:
+
+#### 1. **Preprocessing**
+
+* Contextualizes and categorizes user input.
+* Validates inputs.
+* Appends preprocessing instructions to the base prompt.
+
+#### 2. **Orchestration**
+
+This is where the core decision-making happens.
+
+* The agent uses the foundation model to interpret user input and generate a **rationale**.
+
+* It predicts which of the following steps to take:
+
+  1. **Invoke an action group** (e.g., Lambda)
+  2. **Query the knowledge base** for missing info
+  3. **Re-prompt the user** to supply missing parameters
+
+* These steps generate an **observation**, which is fed back into the agent for iterative decision-making.
+
+> 🔁 The orchestration loop continues until:
+>
+> * The agent has all required data
+> * An action completes successfully
+> * Or the user is prompted again
+
+#### 3. **Postprocessing**
+
+* Optionally transforms internal output into final user-facing text.
+* Disabled by default but can be toggled at runtime.
+
+---
+
+## 🧪 Debugging and Testing
+
+* Use **`TestAliasId`** to validate agent behavior pre-deployment.
+
+* Enable **runtime traces** to view:
+
+  * Reasoning chains
+  * Actions selected
+  * KB queries
+  * All intermediate observations
+
+* The **conversation history is preserved** and grows over time, improving context and continuity.
+
+---
+
+## ✅ Summary of Agentic Execution
+
+| Phase            | Description                                                               |
+| ---------------- | ------------------------------------------------------------------------- |
+| **Build Time**   | Define prompts, action groups, KBs, and metadata                          |
+| **Invoke Time**  | Agent runs preprocessing → orchestration loop → (optional) postprocessing |
+| **Tools**        | Lambda functions (via OpenAPI), KB embeddings, CloudWatch logs            |
+| **Iteration**    | Based on responses, observations, missing parameters                      |
+| **Final Output** | Delivered once the orchestration loop resolves or user input is fulfilled |
+
